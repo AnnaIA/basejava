@@ -3,11 +3,10 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    static int defaultSize = 10000;
     int pointer = 0;
 
     void clear() {
-        for (int i = 0; i < pointer+1; i++) {
+        for (int i = 0; i <= pointer; i++) {
             if (storage[i] == null){
                 break;
             }
@@ -32,7 +31,7 @@ public class ArrayStorage {
     void delete(String uuid) {
         for (int i = 0; i <= pointer; i++) {
             if(storage[i].uuid.equals(uuid)){
-                for (int j = i; j < pointer+1; j++) {
+                for (int j = i; j <= pointer; j++) {
                     if(storage[j+1] != null) {
                         storage[j] = storage[j + 1];
                     }

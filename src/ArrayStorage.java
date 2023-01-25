@@ -3,25 +3,25 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int pointer = 0;
+    int size = 0;
 
     void clear() {
-        for (int i = 0; i <= pointer; i++) {
+        for (int i = 0; i <= size; i++) {
             if (storage[i] == null){
                 break;
             }
             storage[i] = null;
         }
-        pointer = 0;
+        size = 0;
     }
 
     void save(Resume r) {
-        storage[pointer] = r;
-        pointer++;
+        storage[size] = r;
+        size++;
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < pointer; i++) {
+        for (int i = 0; i < size; i++) {
             if(storage[i].uuid.equals(uuid))
                 return storage[i];
         }
@@ -29,13 +29,13 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int i = 0; i <= pointer; i++) {
+        for (int i = 0; i <= size; i++) {
             if(storage[i].uuid.equals(uuid)){
-                for (int j = i; j < pointer; j++) {
+                for (int j = i; j < size; j++) {
                     storage[j] = storage[j + 1];
                 }
-                pointer--;
-                storage[pointer] = null;
+                size--;
+                storage[size] = null;
                 break;
             }
         }
@@ -45,8 +45,8 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] resume = new Resume[pointer];
-        for (int i = 0; i < pointer; i++) {
+        Resume[] resume = new Resume[size];
+        for (int i = 0; i < size; i++) {
             resume[i] = storage[i];
         }
         //System.arraycopy(storage, 0, resume, 0, pointer); The same function may be like that.
@@ -54,6 +54,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        return pointer;
+        return size;
     }
 }

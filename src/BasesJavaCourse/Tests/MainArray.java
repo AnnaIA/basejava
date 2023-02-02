@@ -1,9 +1,14 @@
+package BasesJavaCourse.Tests;
+
+import BasesJavaCourse.DataBase.ArrayStorage;
+import BasesJavaCourse.Info.Resume;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for BasesJavaCourse.DataBase.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {

@@ -1,6 +1,6 @@
-package BasesJavaCourse.DataBase;
+package ru.iljicheva.basejava.storage;
 
-import BasesJavaCourse.Info.Resume;
+import ru.iljicheva.basejava.model.Resume;
 
 import java.util.Arrays;
 
@@ -8,39 +8,43 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
+        System.out.println("Storage has been cleared.");
     }
 
     public void save(Resume r) {
-        if (resumeLocation(r.uuid) == -1 && size < 10000) {
+        if (size > STORAGE_LIMIT){
+            System.out.printf("The resume with uuid = %s did not save. Storage is crowded.\n", r.uuid);
+        } else if (getIndex(r.uuid) > 0){
+            System.out.printf("The resume with uuid = %s did not save. This uuid exists.\n", r.uuid);
+        } else {
             storage[size] = r;
             size++;
-        } else {
-            System.out.printf("The resume with uuid = %s did not save. This uuid exists or storage is crowded\n", r.uuid);
+            System.out.printf("The resume with uuid = %s has been saved successful.\n", r.uuid);
         }
     }
 
     public Resume get(String uuid) {
-        int resumeLocation = resumeLocation(uuid);
-        if (resumeLocation > -1){
-            return storage[resumeLocation];
+        int index = getIndex(uuid);
+        if (index < 0){
+            System.out.printf("The resume with uuid = %s does not exist\n", uuid);
+            return null;
+
         }
-        System.out.printf("The resume with uuid = %s does not exist\n", uuid);
-        return null;
+        return storage[index];
     }
 
     public void delete(String uuid) {
-        int resumeLocation = resumeLocation(uuid);
-        if (resumeLocation(uuid) > -1) {
-            for (int j = resumeLocation; j < size; j++) {
-                storage[j] = storage[j + 1];
-            }
+        int index = getIndex(uuid);
+        if (getIndex(uuid) > -1) {
             size--;
+            storage[index] = storage[size];
             storage[size] = null;
             System.out.printf("The resume with uuid = %s has been deleted successful\n", uuid);
         } else {
@@ -60,7 +64,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        int resumeLocation = resumeLocation(r.uuid);
+        int resumeLocation = getIndex(r.uuid);
         if ( resumeLocation > -1) {
             storage[resumeLocation] = r;
             System.out.printf("The resume with uuid = %s has been updated\n", r.uuid);
@@ -69,11 +73,9 @@ public class ArrayStorage {
         }
     }
 
-    private int resumeLocation(String uuid) {
-        Resume resume = new Resume();
-        resume.uuid = uuid;
+    private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(resume.uuid)){   //checking that the resume exists in the storage
+            if (storage[i].uuid.equals(uuid)){   //checking that the resume exists in the storage
                 return i;                               //return resume location in the storage
             }
         }

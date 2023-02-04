@@ -1,7 +1,7 @@
-package BasesJavaCourse.Tests;
+package ru.iljicheva.basejava;
 
-import BasesJavaCourse.DataBase.ArrayStorage;
-import BasesJavaCourse.Info.Resume;
+import ru.iljicheva.basejava.storage.ArrayStorage;
+import ru.iljicheva.basejava.model.Resume;
 
 import java.io.BufferedReader;
 import java.io.IOException;

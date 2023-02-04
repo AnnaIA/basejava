@@ -1,4 +1,4 @@
-package BasesJavaCourse.Info;
+package ru.iljicheva.basejava.model;
 
 /**
  * Initial resume class

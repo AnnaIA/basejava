@@ -1,7 +1,7 @@
-package BasesJavaCourse.Tests;
+package ru.iljicheva.basejava;
 
-import BasesJavaCourse.DataBase.ArrayStorage;
-import BasesJavaCourse.Info.Resume;
+import ru.iljicheva.basejava.storage.ArrayStorage;
+import ru.iljicheva.basejava.model.Resume;
 
 /**
  * Test for your BasesJavaCourse.DataBase.ArrayStorage implementation
@@ -21,20 +21,22 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.uuid));
-        System.out.println("Size: " + ARRAY_STORAGE.size());
+        System.out.println("\nGet r1: " + ARRAY_STORAGE.get(r1.uuid));
+        System.out.printf("Size: %d\n", ARRAY_STORAGE.size());
 
-        System.out.println("\nGet dummy: " + ARRAY_STORAGE.get("dummy"));
+        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         System.out.printf("\nUpdate resume with uuid = %s \n", r3.uuid);
         ARRAY_STORAGE.update(r3);
-
         printAll();
+
+        System.out.printf("\nDelete resume with uuid = %s \n", r1.uuid);
         ARRAY_STORAGE.delete(r1.uuid);
         printAll();
+
+        System.out.println("\nClear storage.");
         ARRAY_STORAGE.clear();
         printAll();
-
         System.out.println("Size: " + ARRAY_STORAGE.size());
     }
 

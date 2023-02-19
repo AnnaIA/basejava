@@ -6,14 +6,15 @@ import ru.iljicheva.basejava.model.Resume;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
+
     @Override
-    protected void deleteExistingObj(int index) {
+    protected void fillDeletedElement(int index) {
         storage[index] = storage[size - 1];
         storage[size] = null;
     }
 
     @Override
-    protected void saveObj(int index, Resume r) {
+    protected void insertElement(int index, Resume r) {
         storage[size] = r;
     }
 

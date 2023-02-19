@@ -7,27 +7,23 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void deleteExistingObj(int index) {
-        for (int j = index; j <= size; j++) {
-            storage[j] = storage[j + 1];
+    protected void fillDeletedElement(int index) {
+        int numMoved = size - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numMoved);
         }
     }
 
     @Override
-    protected void saveObj(int index, Resume r) {
+    protected void insertElement(int index, Resume r) {
         index = Math.abs(index) - 1;
-        if (index < size) {
-            for (int i = size; i > index; i--) {
-                storage[i] = storage[i + 1];
-            }
-        }
+        System.arraycopy(storage, index, storage, index + 1, size - index);
         storage[index] = r;
     }
 
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }

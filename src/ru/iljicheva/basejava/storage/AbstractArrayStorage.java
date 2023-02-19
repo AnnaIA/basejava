@@ -1,11 +1,14 @@
 package ru.iljicheva.basejava.storage;
 
+import ru.iljicheva.basejava.exception.ExistStorageException;
+import ru.iljicheva.basejava.exception.NotExistStorageException;
+import ru.iljicheva.basejava.exception.StorageException;
 import ru.iljicheva.basejava.model.Resume;
 
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10000;
+    public static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
@@ -20,11 +23,11 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (size > STORAGE_LIMIT) {
-            System.out.printf("The resume with uuid = %s did not save. Storage is crowded.\n", r.getUuid());
+            throw new StorageException("Storage overflow", r.getUuid());
         } else if (getIndex(r.getUuid()) > 0) {
-            System.out.printf("The resume with uuid = %s did not save. This uuid exists.\n", r.getUuid());
+            throw new ExistStorageException(r.getUuid());
         } else {
-            saveObj(index, r);
+            insertElement(index, r);
             size++;
             System.out.printf("The resume with uuid = %s has been saved successful.\n", r.getUuid());
         }
@@ -38,37 +41,36 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (getIndex(uuid) > -1) {
-            deleteExistingObj(index);
+        if (getIndex(uuid) < 0) {
+            throw new NotExistStorageException(uuid);
+        } else {
+            fillDeletedElement(index);
             System.out.printf("The resume with uuid = %s has been deleted successful\n", uuid);
             size--;
-        } else {
-            System.out.printf("The resume with uuid = %s does not exist\n", uuid);
         }
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
-            System.out.printf("The resume with uuid = %s does not exist\n", uuid);
-            return null;
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
 
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > -1) {
+        if (index < 0) {
+            throw new NotExistStorageException(r.getUuid());
+        } else {
             storage[index] = r;
             System.out.printf("The resume with uuid = %s has been updated\n", r);
-        } else {
-            System.out.printf("The resume with uuid = %s does not exist\n", r);
         }
     }
 
-    protected abstract void deleteExistingObj(int index);
+    protected abstract void fillDeletedElement(int index);
 
-    protected abstract void saveObj(int index, Resume r);
+    protected abstract void insertElement(int index, Resume r);
 
     protected abstract int getIndex(String uuid);
 }

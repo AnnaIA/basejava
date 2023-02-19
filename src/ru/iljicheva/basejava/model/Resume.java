@@ -1,5 +1,7 @@
 package ru.iljicheva.basejava.model;
 
+import java.util.UUID;
+
 /**
  * Initial resume class
  */
@@ -7,6 +9,12 @@ public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
+    public Resume(){
+        this(UUID.randomUUID().toString());
+    };
+    public Resume(String uuid1) {
+        this.uuid = uuid1;
+    }
 
     public String getUuid() {
         return uuid;

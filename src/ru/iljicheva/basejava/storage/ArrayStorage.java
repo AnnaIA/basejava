@@ -18,12 +18,12 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size] = r;
     }
 
-
     @Override
-    protected int getIndex(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {   //checking that the resume exists in the storage
-                return i;                               //return resume location in the storage
+            //System.out.println(storage[i]);
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
             }
         }
         return -1;

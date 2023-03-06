@@ -1,7 +1,7 @@
 package ru.iljicheva.basejava;
 
-import ru.iljicheva.basejava.storage.ArrayStorage;
 import ru.iljicheva.basejava.model.Resume;
+import ru.iljicheva.basejava.storage.ArrayStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -5,7 +5,7 @@ import ru.iljicheva.basejava.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage{
+public class ListStorage extends AbstractStorage {
 
     protected List<Resume> storage = new ArrayList<>();
 
@@ -17,7 +17,7 @@ public class ListStorage extends AbstractStorage{
     @Override
     protected Integer getSearchKey(String uuid) {
         Resume r = new Resume(uuid);
-        if (storage.contains(r)){
+        if (storage.contains(r)) {
             return storage.indexOf(r);
         }
         return null;

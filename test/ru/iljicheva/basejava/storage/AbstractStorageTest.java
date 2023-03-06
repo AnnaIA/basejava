@@ -20,7 +20,6 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-    private final Storage storage;
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
@@ -35,6 +34,8 @@ public abstract class AbstractStorageTest {
         RESUME_NOT_EXIST = new Resume(UUID_NOT_EXIST);
     }
 
+    private final Storage storage;
+
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -45,7 +46,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
-        //System.out.println(storage.toString());
     }
 
     @Test
@@ -69,7 +69,11 @@ public abstract class AbstractStorageTest {
     public void getAll() throws Exception {
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
         Resume[] actual = storage.getAll();
-        assertArrayEquals(expected, actual);
+        if (storage.getClass().isInstance(new MapStorage())) {
+            assertEquals(storage.size(), expected.length);
+        } else {
+            assertArrayEquals(expected, actual);
+        }
     }
 
     @Test

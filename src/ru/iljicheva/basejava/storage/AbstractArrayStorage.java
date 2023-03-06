@@ -10,13 +10,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public String toString(){
+    /*public String toString() {
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < size; i++) {
             res.append(storage[i].getUuid()).append(", ");
         }
         return res.toString();
-    }
+    }*/
 
     @Override
     public int size() {
@@ -27,6 +27,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
+
     @Override
     protected boolean isExist(Object searchKey) {
         return (Integer) searchKey > -1;

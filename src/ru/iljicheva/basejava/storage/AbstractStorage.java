@@ -4,13 +4,18 @@ import ru.iljicheva.basejava.exception.ExistStorageException;
 import ru.iljicheva.basejava.exception.NotExistStorageException;
 import ru.iljicheva.basejava.model.Resume;
 
-public abstract class AbstractStorage implements Storage{
+public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
+
     protected abstract boolean isExist(Object searchKey);
+
     protected abstract void doUpdate(Resume r, Object searchKey);
+
     protected abstract void doSave(Resume r, Object searchKey);
+
     protected abstract Resume doGet(Object searchKey);
+
     protected abstract void doDelete(Object searchKey);
 
     @Override
@@ -37,17 +42,17 @@ public abstract class AbstractStorage implements Storage{
         doSave(r, searchKey);
     }
 
-    public Object getExistSearchKey(String uuid){
+    public Object getExistSearchKey(String uuid) {
         Object searchKey = getSearchKey(uuid);
-        if (!isExist(searchKey)){
+        if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    public Object getNotExistSearchKey(String uuid){
+    public Object getNotExistSearchKey(String uuid) {
         Object searchKey = getSearchKey(uuid);
-        if (isExist(searchKey)){
+        if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
         return searchKey;

@@ -11,6 +11,6 @@ public class MapStorageTest extends AbstractStorageTest {
     @Override
     @Ignore
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void saveToOverflowArray() {
+    public void saveOverflow() {
     }
 }

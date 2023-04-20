@@ -27,11 +27,11 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_NOT_EXIST;
 
     static {
-        RESUME_1 = new Resume(UUID_1);
-        RESUME_2 = new Resume(UUID_2);
-        RESUME_3 = new Resume(UUID_3);
-        RESUME_4 = new Resume(UUID_4);
-        RESUME_NOT_EXIST = new Resume(UUID_NOT_EXIST);
+        RESUME_1 = new Resume(UUID_1, "name 1");
+        RESUME_2 = new Resume(UUID_2, "name 2");
+        RESUME_3 = new Resume(UUID_3, "name 3");
+        RESUME_4 = new Resume(UUID_4, "name 4");
+        RESUME_NOT_EXIST = new Resume(UUID_NOT_EXIST, "name");
     }
 
     private final Storage storage;
@@ -68,8 +68,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAll() throws Exception {
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
-        Resume[] actual = storage.getAll();
-        if (storage.getClass().isInstance(new MapStorage())) {
+        Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
+        if (storage.getClass().isInstance(new MapStorage()) || storage.getClass().isInstance(new MapStorageNewKey())) {
             assertEquals(storage.size(), expected.length);
         } else {
             assertArrayEquals(expected, actual);
@@ -89,7 +89,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void saveToOverflowArray() throws Exception {
+    public void saveOverflow() throws Exception {
         storage.clear();
         try {
             for (int i = 0; i < ArrayStorage.STORAGE_LIMIT; i++) {

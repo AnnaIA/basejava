@@ -26,7 +26,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
+    public List<Resume> doGetAll() {
         return new ArrayList<>(List.of(Arrays.copyOf(storage, size)));
     }
 

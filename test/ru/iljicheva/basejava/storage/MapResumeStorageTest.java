@@ -3,10 +3,10 @@ package ru.iljicheva.basejava.storage;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class MapStorageNewKeyTest extends AbstractStorageTest {
+public class MapResumeStorageTest extends AbstractStorageTest {
 
-    public MapStorageNewKeyTest() {
-        super(new MapStorageNewKey());
+    public MapResumeStorageTest() {
+        super(new MapResumeStorage());
     }
 
     @Override

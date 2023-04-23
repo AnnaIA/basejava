@@ -16,7 +16,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected Integer getSearchKey(String uuid) {
-        Resume r = new Resume(uuid);
+        Resume r = new Resume(uuid, "");
         if (storage.contains(r)) {
             return storage.indexOf(r);
         }
@@ -49,8 +49,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        return List.of(storage.toArray(new Resume[storage.size()]));
+    public List<Resume> doGetAll() {
+        return new ArrayList<>(storage);
     }
 
     @Override

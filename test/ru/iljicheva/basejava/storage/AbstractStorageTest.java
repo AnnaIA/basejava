@@ -20,6 +20,11 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+    private static final String NAME_NOT_EXIST = "dummy";
+    private static final String NAME_1 = "uuid1";
+    private static final String NAME_2 = "uuid2";
+    private static final String NAME_3 = "uuid3";
+    private static final String NAME_4 = "uuid4";
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
@@ -27,11 +32,11 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_NOT_EXIST;
 
     static {
-        RESUME_1 = new Resume(UUID_1, "name 1");
-        RESUME_2 = new Resume(UUID_2, "name 2");
-        RESUME_3 = new Resume(UUID_3, "name 3");
-        RESUME_4 = new Resume(UUID_4, "name 4");
-        RESUME_NOT_EXIST = new Resume(UUID_NOT_EXIST, "name");
+        RESUME_1 = new Resume(UUID_1, NAME_1);
+        RESUME_2 = new Resume(UUID_2, NAME_2);
+        RESUME_3 = new Resume(UUID_3, NAME_3);
+        RESUME_4 = new Resume(UUID_4, NAME_4);
+        RESUME_NOT_EXIST = new Resume(UUID_NOT_EXIST, NAME_NOT_EXIST);
     }
 
     private final Storage storage;
@@ -55,7 +60,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "NEW NAME");
         storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_1));
     }
@@ -69,7 +74,7 @@ public abstract class AbstractStorageTest {
     public void getAll() throws Exception {
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
         Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
-        if (storage.getClass().isInstance(new MapStorage()) || storage.getClass().isInstance(new MapStorageNewKey())) {
+        if (storage.getClass().isInstance(new MapStorage()) || storage.getClass().isInstance(new MapResumeStorage())) {
             assertEquals(storage.size(), expected.length);
         } else {
             assertArrayEquals(expected, actual);
